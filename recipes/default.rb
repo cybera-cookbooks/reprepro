@@ -75,7 +75,7 @@ end
     group "nogroup"
     variables(
       :allow => node['reprepro']['allow'],
-      :codenames => node['reprepro']['codenames'],
+      :distributions => node['reprepro']['distributions'],
       :architectures => node['reprepro']['architectures'],
       :incoming => node['reprepro']['incoming'],
       :pulls => node['reprepro']['pulls']

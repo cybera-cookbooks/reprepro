@@ -1,3 +1,6 @@
-Name: <%= @pulls["name"] %>
-From: <%= @pulls["from"] %>
-Components: <%= @pulls["component"] %>
+<% @pulls.each do |name, pull| -%>
+Name: <%= name %>
+From: <%= pull[:from] %>
+Components: <%= pull[:components].join(" ") %>
+
+<% end -%>
