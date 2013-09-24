@@ -1,23 +1,25 @@
 <VirtualHost *:<%= node[:reprepro][:listen_port] %>>
+  DocumentRoot <%= @repo_dir %>
   ServerAdmin <%= node[:reprepro][:pgp_email] %>
   ServerName <%= node[:reprepro][:fqdn] %>
-  ServerAlias <%= node[:hostname] %> <%= node[:fqdn] %>
 
-  DocumentRoot <%= @repo_dir %>
-  <Directory />
-    Options FollowSymLinks
-    AllowOverride None
+  <Directory "<%= @repo_dir %>">
+    Options Indexes FollowSymLinks MultiViews
+    Order allow,deny
+    Allow from all
   </Directory>
 
-  <Directory <%= @repo_dir %>>
-    Options Indexes FollowSymLinks MultiViews
-    AllowOverride None
+  <Directory "<%= @repo_dir %>/conf/">
     Order allow,deny
-    allow from all
+    Deny from all
+  </Directory>
+
+  <Directory "<%= @repo_dir %>/db/">
+    Order allow,deny
+    Deny from all
   </Directory>
 
   LogLevel warn
-  ErrorLog /var/log/apache2/apt_repo-error.log 
+  ErrorLog /var/log/apache2/apt_repo-error.log
   CustomLog /var/log/apache2/apt_repo-access.log combined
-  ServerSignature On
 </VirtualHost>
