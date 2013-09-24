@@ -1,4 +1,4 @@
 Name: default
 IncomingDir: <%= @incoming %>
 TempDir: /tmp
-Allow: <%= @distributions.join(" ") %> <%= @allow.join(" ") %>
+Allow: <%= @distributions.keys.join(" ") %> <%= @allow.join(" ") %>

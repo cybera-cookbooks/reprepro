@@ -77,6 +77,7 @@ end
       :allow => node['reprepro']['allow'],
       :distributions => node['reprepro']['distributions'],
       :architectures => node['reprepro']['architectures'],
+      :components => node['reprepro']['components'],
       :incoming => node['reprepro']['incoming'],
       :pulls => node['reprepro']['pulls']
     )
