@@ -2,8 +2,8 @@
 Origin: <%= node[:reprepro][:fqdn] %>
 Label: <%= dist[:label] %>
 Codename: <%= name %>
-Architectures: <%= @architectures.join(" ") %>
-Components: <%= @components.join(" ") %>
+Architectures: <%= dist[:architectures].join(" ") %>
+Components: <%= dist[:components].join(" ") %>
 Description: <%= dist[:description] %>
 SignWith: <%= node[:reprepro][:pgp_email] %>
 <% if dist.has_key?(:pull) -%>

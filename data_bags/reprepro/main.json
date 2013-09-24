@@ -6,18 +6,19 @@
   "distributions": {
     "precise-production": {
       "label": "Ubuntu",
+      "components": [ "cybera" ],
+      "architectures": [ "amd64", "i386" ], 
       "description": "LMC production packages for Ubuntu 12.04",
       "pull": "precise-testing"
     },
     "precise-testing": {
       "label": "Ubuntu",
+      "components": [ "cybera" ],
+      "architectures": [ "amd64", "i386" ],
       "description": "LMC testing packages for Ubuntu 12.04"
     }
   },
   "allow": [
-  ],
-  "components": [
-    "cybera"
   ],
   "pulls": {
     "precise-testing": {
@@ -25,10 +26,6 @@
       "components": [ "cybera" ]
     }
   },
-  "architectures": [
-    "amd64",
-    "i386"
-  ],
   "pgp": {
     "email": "reprepro@example.com",
     "fingerprint": "PGP Fingerprint for the key",
