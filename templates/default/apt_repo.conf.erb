@@ -1,25 +1,31 @@
-<VirtualHost *:<%= node[:reprepro][:listen_port] %>>
-  DocumentRoot <%= @repo_dir %>
-  ServerAdmin <%= node[:reprepro][:pgp_email] %>
-  ServerName <%= node[:reprepro][:fqdn] %>
+<VirtualHost *:<%= @params[:listen_port] %>>
+  ServerName <%= @params[:server_name] %>
+  ServerAlias <% @params[:server_aliases].each do |a| %><%= a %> <% end %>
+  DocumentRoot <%= @params[:docroot] %>
 
-  <Directory "<%= @repo_dir %>">
+  <Directory <%= @params[:docroot] %>>
     Options Indexes FollowSymLinks MultiViews
+    AllowOverride None
     Order allow,deny
     Allow from all
   </Directory>
 
-  <Directory "<%= @repo_dir %>/conf/">
+  <Directory <%= @params[:docroot] %>/conf/>
     Order allow,deny
     Deny from all
   </Directory>
 
-  <Directory "<%= @repo_dir %>/db/">
+  <Directory <%= @params[:docroot] %>/db/>
     Order allow,deny
     Deny from all
+  </Directory>
+
+  <Directory />
+    Options FollowSymLinks
+    AllowOverride None
   </Directory>
 
   LogLevel warn
-  ErrorLog /var/log/apache2/apt_repo-error.log
-  CustomLog /var/log/apache2/apt_repo-access.log combined
+  ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
+  CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
 </VirtualHost>

@@ -123,35 +123,10 @@ else
   end
 end
 
-if(node['reprepro']['enable_repository_on_host'])
-  include_recipe 'apt'
-
-  execute "apt-key add #{pgp_key}" do
-    action :nothing
-    if(apt_repo)
-      subscribes :run, "template[#{pgp_key}]", :immediately
-    else
-      subscribes :run, "file[#{pgp_key}]", :immediately
-    end
-  end
-
-  apt_repository "reprepro" do
-    uri "file://#{node['reprepro']['repo_dir']}"
-    distribution node['lsb']['codename']
-    components ["main"]
-  end
-end
-
-template "#{node['apache']['dir']}/sites-available/apt_repo.conf" do
-  source "apt_repo.conf.erb"
-  mode 0644
-  variables(
-    :repo_dir => node['reprepro']['repo_dir']
-  )
-end
-
-apache_site "apt_repo.conf"
-
-apache_site "000-default" do
-  enable false
+web_app "apt_repo" do
+    template "apt_repo.conf.erb"
+    server_name node['reprepro']['fqdn']
+    server_aliases [node['fqdn']]
+    listen_port node['reprepro']['listen_port']
+    docroot node['reprepro']['repo_dir']
 end

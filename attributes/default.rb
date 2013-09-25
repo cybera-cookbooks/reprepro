@@ -6,5 +6,4 @@ default['reprepro']['distributions'] = {}
 default['reprepro']['allow'] = []
 default['reprepro']['pulls'] = {}
 default['reprepro']['gnupg_home'] = '/root/.gnupg'
-default['reprepro']['enable_repository_on_host'] = false
 default['reprepro']['disable_databag'] = false
