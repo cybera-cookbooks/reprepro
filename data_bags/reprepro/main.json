@@ -2,12 +2,11 @@
   "id": "main",
   "fqdn": "localhost",
   "repo_dir": "/srv/apt",
-  "incoming": "/srv/apt_incoming",
   "distributions": {
     "precise-production": {
       "label": "Ubuntu",
       "components": [ "cybera" ],
-      "architectures": [ "amd64", "i386" ], 
+      "architectures": [ "amd64", "i386" ],
       "description": "LMC production packages for Ubuntu 12.04",
       "pull": "precise-testing"
     },

@@ -20,7 +20,6 @@
 
 node.set['apache']['listen_ports'] = node['apache']['listen_ports'] | Array(node['reprepro']['listen_port'])
 
-include_recipe "build-essential"
 include_recipe "apache2"
 
 unless(node['reprepro']['disable_databag'])
@@ -47,22 +46,29 @@ ruby_block "save node data" do
   not_if { ::Chef::Config[:solo] }
 end
 
-%w{apt-utils dpkg-dev reprepro debian-keyring devscripts dput}.each do |pkg|
+%w{ apt-utils dpkg-dev reprepro debian-keyring devscripts dput }.each do |pkg|
   package pkg
 end
 
-[ node['reprepro']['repo_dir'], node['reprepro']['incoming'] ].each do |dir|
-  directory dir do
-    owner "nobody"
-    group "nogroup"
-    mode "0755"
-  end
+group "reprepro"
+
+user "reprepro" do
+  supports :manage_home => true
+  home "/home/reprepro"
+  shell "/bin/bash"
+  gid "reprepro"
 end
 
-%w{ conf db dists pool tarballs }.each do |dir|
+directory node['reprepro']['repo_dir'] do
+  owner "reprepro"
+  group "reprepro"
+  mode "0755"
+end
+
+%w{ conf db dists incoming pool tarballs }.each do |dir|
   directory "#{node['reprepro']['repo_dir']}/#{dir}" do
-    owner "nobody"
-    group "nogroup"
+    owner "reprepro"
+    group "reprepro"
     mode "0755"
   end
 end
@@ -71,62 +77,84 @@ end
   template "#{node['reprepro']['repo_dir']}/conf/#{conf}" do
     source "#{conf}.erb"
     mode "0644"
-    owner "nobody"
-    group "nogroup"
+    owner "reprepro"
+    group "reprepro"
     variables(
       :allow => node['reprepro']['allow'],
       :distributions => node['reprepro']['distributions'],
-      :incoming => node['reprepro']['incoming'],
-      :pulls => node['reprepro']['pulls']
+      :pulls => node['reprepro']['pulls'],
+      :repo_dir => node['reprepro']['repo_dir']
     )
   end
 end
 
-if(apt_repo)
-  pgp_key = "#{apt_repo["repo_dir"]}/#{node['reprepro']['pgp_email']}.gpg.key"
-
-  execute "import packaging key" do
-    command "/bin/echo -e '#{apt_repo["pgp"]["private"]}' | gpg --import -"
-    user "root"
-    cwd "/root"
-    environment "GNUPGHOME" => node['reprepro']['gnupg_home']
-    not_if "GNUPGHOME=/root/.gnupg gpg --list-secret-keys --fingerprint #{node['reprepro']['pgp_email']} | egrep -qx '.*Key fingerprint = #{node['reprepro']['pgp_fingerprint']}'"
-  end
-
-  template pgp_key do
-    source "pgp_key.erb"
-    mode "0644"
-    owner "nobody"
-    group "nogroup"
-    variables(
-      :pgp_public => apt_repo["pgp"]["public"]
-    )
-  end
-else
-  pgp_key = "#{node['reprepro']['repo_dir']}/#{node['gpg']['name']['email']}.gpg.key"
-  node.default['reprepro']['pgp_email'] = node['gpg']['name']['email']
-
-  execute "sudo -u #{node['gpg']['user']} -i gpg --armor --export #{node['gpg']['name']['real']} > #{pgp_key}" do
-    creates pgp_key
-  end
-
-  file pgp_key do
-    mode 0644
-    owner "nobody"
-    group "nogroup"
-  end
-
-  execute "reprepro -Vb #{node['reprepro']['repo_dir']} export" do
-    action :nothing
-    subscribes :run, "file[#{pgp_key}]", :immediately
-    environment "GNUPGHOME" => node['reprepro']['gnupg_home']
-  end
+execute "import-private-key" do
+  command "gpg --allow-secret-key-import --import - < /home/reprepro/repository-private.key"
+  user "reprepro"
+  environment "GNUPGHOME" => "/home/reprepro/.gnupg"
+  action :nothing
 end
+
+cookbook_file "#{node['reprepro']['repo_dir']}/repository-public.key" do
+  source "public.key"
+  owner "reprepro"
+  group "reprepro"
+end
+
+cookbook_file "/home/reprepro/repository-private.key" do
+  source "private.key"
+  owner "reprepro"
+  group "reprepro"
+  notifies :run, "execute[import-private-key]", :immediately
+end
+
+# if(apt_repo)
+#   pgp_key = "#{apt_repo["repo_dir"]}/#{node['reprepro']['pgp_email']}.gpg.key"
+
+#   execute "import packaging key" do
+#     command "/bin/echo -e '#{apt_repo['pgp']['private']}' | gpg --import -"
+#     user "root"
+#     cwd "/root"
+#     environment "GNUPGHOME" => node['reprepro']['gnupg_home']
+#     not_if "GNUPGHOME=/root/.gnupg gpg --list-secret-keys --fingerprint #{node['reprepro']['pgp_email']} | egrep -qx '.*Key fingerprint = #{node['reprepro']['pgp_fingerprint']}'"
+#   end
+
+#   template pgp_key do
+#     source "pgp_key.erb"
+#     mode "0644"
+#     owner "reprepro"
+#     group "reprepro"
+#     variables(
+#       :pgp_public => apt_repo["pgp"]["public"]
+#     )
+#   end
+# else
+#   pgp_key = "#{node['reprepro']['repo_dir']}/#{node['gpg']['name']['email']}.gpg.key"
+#   node.default['reprepro']['pgp_email'] = node['gpg']['name']['email']
+
+#   execute "sudo -u #{node['gpg']['user']} -i gpg --armor --export #{node['gpg']['name']['real']} > #{pgp_key}" do
+#     user "reprepro"
+#     creates pgp_key
+#   end
+
+#   file pgp_key do
+#     mode 0644
+#     owner "reprepro"
+#     group "reprepro"
+#   end
+
+#   execute "reprepro -Vb #{node['reprepro']['repo_dir']} export" do
+#     user "reprepro"
+#     action :nothing
+#     subscribes :run, "file[#{pgp_key}]", :immediately
+#     environment "GNUPGHOME" => node['reprepro']['gnupg_home']
+#   end
+# end
 
 web_app "apt_repo" do
-    template "apt_repo.conf.erb"
-    server_name node['reprepro']['fqdn']
-    server_aliases [node['fqdn']]
-    listen_port node['reprepro']['listen_port']
-    docroot node['reprepro']['repo_dir']
+  template "apt_repo.conf.erb"
+  server_name node['reprepro']['fqdn']
+  server_aliases [node['fqdn']]
+  listen_port node['reprepro']['listen_port']
+  docroot node['reprepro']['repo_dir']
 end

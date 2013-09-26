@@ -10,7 +10,6 @@ version          "0.3.1"
 supports "ubuntu"
 supports "debian"
 
-depends "build-essential"
 depends "apache2"
 recommends "gpg"
 recommends "apt"

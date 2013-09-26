@@ -1,7 +1,6 @@
 default['reprepro']['fqdn'] = node['fqdn']
 default['reprepro']['listen_port'] = 80
 default['reprepro']['repo_dir'] = "/srv/apt"
-default['reprepro']['incoming'] = "/srv/apt_incoming"
 default['reprepro']['distributions'] = {}
 default['reprepro']['allow'] = []
 default['reprepro']['pulls'] = {}

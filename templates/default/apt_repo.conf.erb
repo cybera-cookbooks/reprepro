@@ -20,7 +20,12 @@
     Deny from all
   </Directory>
 
-  <Directory />
+  <Directory <%= @params[:docroot] %>/incoming/>
+    Order allow,deny
+    Deny from all
+  </Directory>
+
+ <Directory />
     Options FollowSymLinks
     AllowOverride None
   </Directory>
