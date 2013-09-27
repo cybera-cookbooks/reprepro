@@ -26,12 +26,9 @@ unless(node['reprepro']['disable_databag'])
   begin
     apt_repo = data_bag_item("reprepro", "main")
     node['reprepro'].keys.each do |key|
-      next if key.to_sym == :pgp
       # NOTE: Use #has_key? so data bags can nil out existing values
       node.default['reprepro'][key] = apt_repo[key] if apt_repo.has_key?(key)
     end
-    node.default['reprepro']['pgp_email'] = apt_repo['pgp']['email']
-    node.default['reprepro']['pgp_fingerprint'] = apt_repo['pgp']['fingerprint']
   rescue Net::HTTPServerException
     Chef::Log.warn 'Data bag not found. Using default attribute settings!'
     include_recipe 'gpg'
@@ -105,51 +102,9 @@ cookbook_file "/home/reprepro/repository-private.key" do
   source "private.key"
   owner "reprepro"
   group "reprepro"
+  mode "0600"
   notifies :run, "execute[import-private-key]", :immediately
 end
-
-# if(apt_repo)
-#   pgp_key = "#{apt_repo["repo_dir"]}/#{node['reprepro']['pgp_email']}.gpg.key"
-
-#   execute "import packaging key" do
-#     command "/bin/echo -e '#{apt_repo['pgp']['private']}' | gpg --import -"
-#     user "root"
-#     cwd "/root"
-#     environment "GNUPGHOME" => node['reprepro']['gnupg_home']
-#     not_if "GNUPGHOME=/root/.gnupg gpg --list-secret-keys --fingerprint #{node['reprepro']['pgp_email']} | egrep -qx '.*Key fingerprint = #{node['reprepro']['pgp_fingerprint']}'"
-#   end
-
-#   template pgp_key do
-#     source "pgp_key.erb"
-#     mode "0644"
-#     owner "reprepro"
-#     group "reprepro"
-#     variables(
-#       :pgp_public => apt_repo["pgp"]["public"]
-#     )
-#   end
-# else
-#   pgp_key = "#{node['reprepro']['repo_dir']}/#{node['gpg']['name']['email']}.gpg.key"
-#   node.default['reprepro']['pgp_email'] = node['gpg']['name']['email']
-
-#   execute "sudo -u #{node['gpg']['user']} -i gpg --armor --export #{node['gpg']['name']['real']} > #{pgp_key}" do
-#     user "reprepro"
-#     creates pgp_key
-#   end
-
-#   file pgp_key do
-#     mode 0644
-#     owner "reprepro"
-#     group "reprepro"
-#   end
-
-#   execute "reprepro -Vb #{node['reprepro']['repo_dir']} export" do
-#     user "reprepro"
-#     action :nothing
-#     subscribes :run, "file[#{pgp_key}]", :immediately
-#     environment "GNUPGHOME" => node['reprepro']['gnupg_home']
-#   end
-# end
 
 web_app "apt_repo" do
   template "apt_repo.conf.erb"
