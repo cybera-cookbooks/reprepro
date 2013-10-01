@@ -66,20 +66,20 @@ end
 end
 
 execute "import-private-key" do
-  command "gpg --allow-secret-key-import --import - < /home/reprepro/repository-private.key"
+  command "gpg --allow-secret-key-import --import - < /home/reprepro/repository-private.gpg"
   user "reprepro"
   environment "GNUPGHOME" => "/home/reprepro/.gnupg"
   action :nothing
 end
 
-cookbook_file "#{node['reprepro']['repo_dir']}/repository-public.key" do
-  source "public.key"
+cookbook_file "#{node['reprepro']['repo_dir']}/repository-public.gpg" do
+  source node['reprepro']['public_key']
   owner "reprepro"
   group "reprepro"
 end
 
-cookbook_file "/home/reprepro/repository-private.key" do
-  source "private.key"
+cookbook_file "/home/reprepro/repository-private.gpg" do
+  source node['reprepro']['public_key']
   owner "reprepro"
   group "reprepro"
   mode "0600"
