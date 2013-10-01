@@ -1,0 +1,14 @@
+<% @updates.each do |name, update| -%>
+Name: <%= name %>
+Method: <%= update[:method] %>
+Suite: <%= update[:suite] %>
+Components: <%= update[:components].join(" ") %>
+Architectures: <%= update[:architectures].join(" ") %>
+<% if update.has_key?(:filterformula) -%>
+FilterFormula: <%= update[:filterformula] %>
+<% end -%>
+<% if update.has_key?(:filterlist) -%>
+FilterList: <%= update[:filterlist][:default_action] %> <%= update[:filterlist][:package_list] %>
+<% end -%>
+
+<% end -%>

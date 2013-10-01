@@ -22,27 +22,6 @@ node.set['apache']['listen_ports'] = node['apache']['listen_ports'] | Array(node
 
 include_recipe "apache2"
 
-unless(node['reprepro']['disable_databag'])
-  begin
-    apt_repo = data_bag_item("reprepro", "main")
-    node['reprepro'].keys.each do |key|
-      # NOTE: Use #has_key? so data bags can nil out existing values
-      node.default['reprepro'][key] = apt_repo[key] if apt_repo.has_key?(key)
-    end
-  rescue Net::HTTPServerException
-    Chef::Log.warn 'Data bag not found. Using default attribute settings!'
-    include_recipe 'gpg'
-  end
-end
-
-ruby_block "save node data" do
-  block do
-    node.save
-  end
-  action :create
-  not_if { ::Chef::Config[:solo] }
-end
-
 %w{ apt-utils dpkg-dev reprepro debian-keyring devscripts dput }.each do |pkg|
   package pkg
 end
@@ -70,7 +49,7 @@ end
   end
 end
 
-%w{ distributions incoming pulls }.each do |conf|
+%w{ distributions incoming pulls updates }.each do |conf|
   template "#{node['reprepro']['repo_dir']}/conf/#{conf}" do
     source "#{conf}.erb"
     mode "0644"
@@ -80,7 +59,8 @@ end
       :allow => node['reprepro']['allow'],
       :distributions => node['reprepro']['distributions'],
       :pulls => node['reprepro']['pulls'],
-      :repo_dir => node['reprepro']['repo_dir']
+      :repo_dir => node['reprepro']['repo_dir'],
+      :updates => node['reprepro']['updates']
     )
   end
 end

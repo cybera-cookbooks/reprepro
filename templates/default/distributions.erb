@@ -9,5 +9,8 @@ SignWith: <%= node[:reprepro][:pgp_email] %>
 <% if dist.has_key?(:pull) -%>
 Pull: <%= dist[:pull] %>
 <% end -%>
+<% if dist.has_key?(:update) -%>
+Update: <%= dist[:update] %>
+<% end -%>
 
 <% end -%>
