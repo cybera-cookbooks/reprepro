@@ -5,6 +5,6 @@ default['reprepro']['updates']['precise'] = {
   'architectures' => [ "amd64" ],
   'filterlist' => {
     'default_action' => "deinstall",
-    'package_list' => "precise.list"
+    'name' => "precise"
   }
 }

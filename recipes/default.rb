@@ -65,6 +65,18 @@ end
   end
 end
 
+node['reprepro']['filterlists'].each do |name, filterlist|
+  template "#{node['reprepro']['repo_dir']}/conf/#{name}.list" do
+    source "filterlist.erb"
+    mode "0644"
+    owner "reprepro"
+    group "reprepro"
+    variables(
+      :filterlist => filterlist
+    )
+  end
+end
+
 execute "import-private-key" do
   command "gpg --allow-secret-key-import --import - < /home/reprepro/repository-private.gpg"
   user "reprepro"

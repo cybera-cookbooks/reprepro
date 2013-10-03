@@ -8,7 +8,7 @@ Architectures: <%= update[:architectures].join(" ") %>
 FilterFormula: <%= update[:filterformula] %>
 <% end -%>
 <% if update.has_key?(:filterlist) -%>
-FilterList: <%= update[:filterlist][:default_action] %> <%= update[:filterlist][:package_list] %>
+FilterList: <%= update[:filterlist][:default_action] %> <%= update[:filterlist][:name] %>
 <% end -%>
 
 <% end -%>
