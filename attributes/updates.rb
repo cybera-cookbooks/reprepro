@@ -3,8 +3,4 @@ default['reprepro']['updates']['precise'] = {
   'suite' => "precise",
   'components' => [ "main", "restricted", "universe", "multiverse" ],
   'architectures' => [ "amd64" ],
-  'filterlist' => {
-    'default_action' => "deinstall",
-    'name' => "precise"
-  }
 }
