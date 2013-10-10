@@ -88,6 +88,7 @@ cookbook_file "#{node['reprepro']['repo_dir']}/repository-public.gpg" do
   source node['reprepro']['public_key']
   owner "reprepro"
   group "reprepro"
+  mode "0644"
 end
 
 cookbook_file "/home/reprepro/repository-private.gpg" do
