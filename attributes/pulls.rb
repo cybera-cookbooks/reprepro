@@ -12,3 +12,8 @@ default['reprepro']['pulls']['precise-testing-security'] = {
   'from' => "precise-testing-security",
   'components' => [ "main", "restricted", "universe", "multiverse" ]
 }
+
+default['reprepro']['pulls']['precise-testing-cybera'] = {
+  'from' => "precise-testing-cybera",
+  'components' => [ "main", ]
+}
