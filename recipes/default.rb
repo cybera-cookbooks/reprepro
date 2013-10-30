@@ -84,7 +84,7 @@ execute "import-private-key" do
   action :nothing
 end
 
-cookbook_file "#{node['reprepro']['repo_dir']}/repository-public.gpg" do
+cookbook_file "#{node['reprepro']['repo_dir']}/pubkey.gpg" do
   source node['reprepro']['public_key']
   owner "reprepro"
   group "reprepro"
