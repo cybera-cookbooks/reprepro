@@ -4,4 +4,4 @@ default['reprepro']['repo_dir'] = "/srv/apt"
 default['reprepro']['allow'] = []
 default['reprepro']['private_key'] = "private.gpg"
 default['reprepro']['public_key'] = "public.gpg"
-default['reprepro']['pgp_email'] = "reprepro@example.com"
+default['reprepro']['pgp_email'] = "devops@cybera.ca"

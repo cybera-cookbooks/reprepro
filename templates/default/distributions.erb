@@ -7,10 +7,10 @@ Components: <%= dist[:components].join(" ") %>
 Description: <%= dist[:description] %>
 SignWith: <%= node[:reprepro][:pgp_email] %>
 <% if dist.has_key?(:pull) -%>
-Pull: <%= dist[:pull] %>
+Pull: <%= dist[:pull].join(" ") %>
 <% end -%>
 <% if dist.has_key?(:update) -%>
-Update: <%= dist[:update] %>
+Update: <%= dist[:update].join(" ") %>
 <% end -%>
 
 <% end -%>

@@ -3,7 +3,7 @@ default['reprepro']['distributions']['precise-production'] = {
   'description' => "LMC production packages for Ubuntu 12.04",
   'components' => [ "main", "restricted", "universe", "multiverse" ],
   'architectures' => [ "amd64", "i386" ],
-  'pull' => "precise-testing"
+  'pull' => [ "precise-testing" ]
 }
 
 default['reprepro']['distributions']['precise-production-updates'] = {
@@ -11,7 +11,7 @@ default['reprepro']['distributions']['precise-production-updates'] = {
   'description' => "LMC production packages for Ubuntu 12.04",
   'components' => [ "main", "restricted", "universe", "multiverse" ],
   'architectures' => [ "amd64", "i386" ],
-  'pull' => "precise-testing-updates"
+  'pull' => [ "precise-testing-updates" ]
 }
 
 default['reprepro']['distributions']['precise-production-security'] = {
@@ -19,7 +19,7 @@ default['reprepro']['distributions']['precise-production-security'] = {
   'description' => "LMC production packages for Ubuntu 12.04",
   'components' => [ "main", "restricted", "universe", "multiverse" ],
   'architectures' => [ "amd64", "i386" ],
-  'pull' => "precise-testing-security"
+  'pull' => [ "precise-testing-security" ]
 }
 
 default['reprepro']['distributions']['precise-production-cybera'] = {
@@ -27,7 +27,7 @@ default['reprepro']['distributions']['precise-production-cybera'] = {
   'description' => "LMC production packages for Ubuntu 12.04",
   'components' => [ "main" ],
   'architectures' => [ "amd64", "i386" ],
-  'pull' => "precise-testing-cybera"
+  'pull' => [ "precise-testing-cybera" ]
 }
 
 default['reprepro']['distributions']['precise-testing'] = {
@@ -35,7 +35,7 @@ default['reprepro']['distributions']['precise-testing'] = {
   'description' => "LMC testing packages for Ubuntu 12.04",
   'components' => [ "main", "restricted", "universe", "multiverse" ],
   'architectures' => [ "amd64", "i386" ],
-  'update' => "precise"
+  'update' => [ "precise", "precise-glusterfs" ]
 }
 
 default['reprepro']['distributions']['precise-testing-updates'] = {
@@ -43,7 +43,7 @@ default['reprepro']['distributions']['precise-testing-updates'] = {
   'description' => "LMC testing packages for Ubuntu 12.04",
   'components' => [ "main", "restricted", "universe", "multiverse" ],
   'architectures' => [ "amd64", "i386" ],
-  'update' => "precise-updates"
+  'update' => [ "precise-updates" ]
 }
 
 default['reprepro']['distributions']['precise-testing-security'] = {
@@ -51,7 +51,7 @@ default['reprepro']['distributions']['precise-testing-security'] = {
   'description' => "LMC testing packages for Ubuntu 12.04",
   'components' => [ "main", "restricted", "universe", "multiverse" ],
   'architectures' => [ "amd64", "i386" ],
-  'update' => "precise-security"
+  'update' => [ "precise-security" ]
 }
 
 default['reprepro']['distributions']['precise-testing-cybera'] = {

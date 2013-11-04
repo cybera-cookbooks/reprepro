@@ -88,6 +88,7 @@ cookbook_file "#{node['reprepro']['repo_dir']}/pubkey.gpg" do
   source node['reprepro']['public_key']
   owner "reprepro"
   group "reprepro"
+  action :create_if_missing
   mode "0644"
 end
 
@@ -96,6 +97,7 @@ cookbook_file "/home/reprepro/repository-private.gpg" do
   owner "reprepro"
   group "reprepro"
   mode "0600"
+  action :create_if_missing
   notifies :run, "execute[import-private-key]", :immediately
 end
 
