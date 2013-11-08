@@ -14,11 +14,11 @@ REQUIREMENTS
 
 Platform: Debian or Ubuntu.
 
-Requires Chef 0.8.x+, client/server. May not work with Chef Solo due
+Requires Chef 0.8.x+, client/server.
 to data bag use.
 
-You'll need to generate the PGP key separately and provide the data in
-the databag.
+You'll need to generate the PGP key separately and provide the keys
+in files.
 
 USAGE
 =====
@@ -26,86 +26,25 @@ USAGE
 Attributes
 ----------
 
-Attributes in this cookbook are set via the default recipe with data
-from the data bag. The following attributes are used, in the
-`reprepro` namespace.
-
-* `fqdn` - the fqdn that would go in sources.list
-* `description` - a description of the repository
-* `pgp_email` - the email address of the pgp key
-* `pgp_fingerprint` - the finger print of the pgp key
-
-Data Bag based repository
--------------------------
-
-Create a data bag to store the repository information. It should be
-named `reprepro`. The recipe uses the `main` data bag item.
-
-    {
-      "id": "main",
-      "fqdn": "apt.example.com",
-      "repo_dir": "/srv/apt",
-      "incoming": "/srv/apt_incoming",
-      "description": "APT Repository for our packages.",
-      "codenames": [
-        "lucid", "hardy", "sid", "squeeze", "lenny"
-      ],
-      "allow": [
-        "unstable>sid", "stable>squeeze"
-      ],
-      "pgp": {
-        "email": "packages@example.com",
-        "fingerprint": "PGP Fingerprint for the key",
-        "public": "-----BEGIN PGP PUBLIC KEY BLOCK-----\n-----END PGP PUBLIC KEY BLOCK-----\n",
-        "private": "-----BEGIN PGP PRIVATE KEY BLOCK-----\n-----END PGP PRIVATE KEY BLOCK-----\n"
-      },
-      "pulls": {
-        "name": "sid",
-        "from": "sid",
-        "component": "main"
-      },
-      "architectures": [
-        "amd64","i386","all","source"
-      ]
-    }
-
-* `fqdn`: the fully qualified domain name of the apt server, used in
-  in the Apache vhost template and as the Origin in the distributions
-  configuration. Also saved to the node as
-  `node['reprepro']['fqdn]`.
-* `repo_dir`: directory on disk where reprepro will serve the packages
-* `incoming`: the incoming directory, used in the incoming
-  configuration.
-* `description`: description about the repository, also saved to the
-  node as `node['reprepro']['description']`.
-* `codenames`: array of codenames to set up for the repository, used
-  with allow for the Allow directive in the incoming configuration
-* `allow`: [optional] array of additional codenames to use in the incoming
-  configuration
-* `pgp`: hash of options for the pgp setup. the
-* `pgp['email']`: email address of the signing key
-* `pgp['fingerprint]`: fingerprint of the PGP key
-* `pgp['public]`: the public PGP key, should be a single line
-  (replace line endings with \n)
-* `pgp['private]`: the private PGP key, should be a single line
-  (replace line endings with \n)
-* `pulls`: hash used in the pulls configuration.
-* `architectures`: array of architectures to create in distributions configuration
-
-Attribute based configuration
------------------------------
-
-Configuration of the repository can also be driven via
-attributes. The same keys available for the data bag are
-available via node attributes with the exception of the
-`pgp` hash. Using attribute based configuration will have
-a PGP key pair auto generated on the node when it is built.
+* `node['reprepro']['fqdn']` - the fqdn that would go in sources.list
+* `node['reprepro']['listen_port']` - listen port for apache
+* `node['reprepro']['allow']` - allows configuration for incoming
+* `node['reprepro']['private_key']` - file name of private key
+* `node['reprepro']['public_key']` - file name of public key
+* `node['reprepro']['pgp_email']` - email address of pgp key
+* `node['reprepro']['distributions']` - reprepro distributions configuration
+* `node['reprepro']['filterlists']` - reprepro filterlists configuration
+* `node['reprepro']['options']` - reprepro options configuration
+* `node['reprepro']['pulls']` - reprepro pulls configuration
+* `node['reprepro']['updates']` - reprepro updates configuration
 
 LICENSE AND AUTHOR
 ==================
 
-- Author: Joshua Timberman (<joshua@opscode.com>)
-- Author: Chris Roberts (<chrisroberts.code@gmail.com>)
+- Author: Cameron Mann (<cameron.mann@cybera.ca>)
+
+Based on the reprepro cookbook created by Joshua Timberman (<joshua@opscode.com>)
+and Chris Roberts (<chrisroberts.code@gmail.com>).
 
 Copyright 2013, Opscode, Inc.
 
