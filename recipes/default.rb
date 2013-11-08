@@ -49,7 +49,7 @@ end
   end
 end
 
-%w{ distributions incoming pulls updates }.each do |conf|
+%w{ distributions incoming options pulls updates }.each do |conf|
   template "#{node['reprepro']['repo_dir']}/conf/#{conf}" do
     source "#{conf}.erb"
     mode "0644"
@@ -58,6 +58,7 @@ end
     variables(
       :allow => node['reprepro']['allow'],
       :distributions => node['reprepro']['distributions'],
+      :options => node['reprepro']['options'],
       :pulls => node['reprepro']['pulls'],
       :repo_dir => node['reprepro']['repo_dir'],
       :updates => node['reprepro']['updates']
