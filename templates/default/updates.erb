@@ -4,6 +4,9 @@ Method: <%= update[:method] %>
 Suite: <%= update[:suite] %>
 Components: <%= update[:components].join(" ") %>
 Architectures: <%= update[:architectures].join(" ") %>
+<% if update.has_key?(:verifyrelease) -%>
+VerifyRelease: <%= update[:verifyrelease] %>
+<% end -%>
 <% if update.has_key?(:filterformula) -%>
 FilterFormula: <%= update[:filterformula] %>
 <% end -%>

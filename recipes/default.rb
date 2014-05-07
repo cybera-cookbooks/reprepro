@@ -78,6 +78,16 @@ node['reprepro']['filterlists'].each do |name, filterlist|
   end
 end
 
+node['reprepro']['updates'].each do |name, update|
+  if update.has_key?('verifyrelease') and update.has_key?('keyserver')
+    execute "import-release-key" do
+      command "gpg --keyserver #{update['keyserver']} --recv-key #{update['verifyrelease']}"
+      user "reprepro"
+      environment "GNUPGHOME" => "/home/reprepro/.gnupg"
+    end
+  end
+end
+
 execute "import-private-key" do
   command "gpg --allow-secret-key-import --import - < /home/reprepro/repository-private.gpg"
   user "reprepro"

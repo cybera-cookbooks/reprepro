@@ -3,6 +3,8 @@ default['reprepro']['updates']['precise'] = {
   'suite' => "precise",
   'components' => [ "main", "restricted", "universe", "multiverse" ],
   'architectures' => [ "amd64", "i386" ],
+  'verifyrelease' => "437D05B5",
+  'keyserver' => "keyserver.ubuntu.com"
 }
 
 default['reprepro']['updates']['precise-updates'] = {
@@ -10,6 +12,8 @@ default['reprepro']['updates']['precise-updates'] = {
   'suite' => "precise-updates",
   'components' => [ "main", "restricted", "universe", "multiverse" ],
   'architectures' => [ "amd64", "i386" ],
+  'verifyrelease' => "437D05B5",
+  'keyserver' => "keyserver.ubuntu.com"
 }
 
 default['reprepro']['updates']['precise-security'] = {
@@ -17,11 +21,15 @@ default['reprepro']['updates']['precise-security'] = {
   'suite' => "precise-security",
   'components' => [ "main", "restricted", "universe", "multiverse" ],
   'architectures' => [ "amd64", "i386" ],
+  'verifyrelease' => "437D05B5",
+  'keyserver' => "keyserver.ubuntu.com"
 }
 
 default['reprepro']['updates']['precise-glusterfs'] = {
   'method' => "http://ppa.launchpad.net/semiosis/ubuntu-glusterfs-3.3/ubuntu",
   'suite' => "precise",
   'components' => [ "main" ],
-  'architectures' => [ "amd64", "i386" ]
+  'architectures' => [ "amd64", "i386" ],
+  'verifyrelease' => "774BAC4D",
+  'keyserver' => "keyserver.ubuntu.com"
 }
