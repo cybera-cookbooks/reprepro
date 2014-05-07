@@ -60,3 +60,66 @@ default['reprepro']['distributions']['precise-testing-cybera'] = {
   'components' => [ "main" ],
   'architectures' => [ "amd64", "i386" ],
 }
+
+default['reprepro']['distributions']['trusty-production'] = {
+  'label' => "Ubuntu",
+  'description' => "LMC production packages for Ubuntu 14.04",
+  'components' => [ "main", "restricted", "universe", "multiverse" ],
+  'architectures' => [ "amd64", "i386" ],
+  'pull' => [ "trusty-testing" ]
+}
+
+default['reprepro']['distributions']['trusty-production-updates'] = {
+  'label' => "Ubuntu",
+  'description' => "LMC production packages for Ubuntu 14.04",
+  'components' => [ "main", "restricted", "universe", "multiverse" ],
+  'architectures' => [ "amd64", "i386" ],
+  'pull' => [ "trusty-testing-updates" ]
+}
+
+default['reprepro']['distributions']['trusty-production-security'] = {
+  'label' => "Ubuntu",
+  'description' => "LMC production packages for Ubuntu 14.04",
+  'components' => [ "main", "restricted", "universe", "multiverse" ],
+  'architectures' => [ "amd64", "i386" ],
+  'pull' => [ "trusty-testing-security" ]
+}
+
+default['reprepro']['distributions']['trusty-production-cybera'] = {
+  'label' => "Ubuntu",
+  'description' => "LMC production packages for Ubuntu 14.04",
+  'components' => [ "main" ],
+  'architectures' => [ "amd64", "i386" ],
+  'pull' => [ "trusty-testing-cybera" ]
+}
+
+default['reprepro']['distributions']['trusty-testing'] = {
+  'label' => "Ubuntu",
+  'description' => "LMC testing packages for Ubuntu 14.04",
+  'components' => [ "main", "restricted", "universe", "multiverse" ],
+  'architectures' => [ "amd64", "i386" ],
+  'update' => [ "trusty", "precise-glusterfs" ]
+}
+
+default['reprepro']['distributions']['trusty-testing-updates'] = {
+  'label' => "Ubuntu",
+  'description' => "LMC testing packages for Ubuntu 14.04",
+  'components' => [ "main", "restricted", "universe", "multiverse" ],
+  'architectures' => [ "amd64", "i386" ],
+  'update' => [ "trusty-updates" ]
+}
+
+default['reprepro']['distributions']['trusty-testing-security'] = {
+  'label' => "Ubuntu",
+  'description' => "LMC testing packages for Ubuntu 14.04",
+  'components' => [ "main", "restricted", "universe", "multiverse" ],
+  'architectures' => [ "amd64", "i386" ],
+  'update' => [ "trusty-security" ]
+}
+
+default['reprepro']['distributions']['trusty-testing-cybera'] = {
+  'label' => "Ubuntu",
+  'description' => "LMC testing packages for Ubuntu 14.04",
+  'components' => [ "main" ],
+  'architectures' => [ "amd64", "i386" ],
+}
