@@ -11,7 +11,7 @@ VerifyRelease: <%= update[:verifyrelease] %>
 FilterFormula: <%= update[:filterformula] %>
 <% end -%>
 <% if update.has_key?(:filterlist) -%>
-FilterList: <%= update[:filterlist][:default_action] %> <%= update[:filterlist][:name] %>
+FilterList: <%= update[:filterlist][:default_action] %> <%= update[:filterlist][:name] %>.list
 <% end -%>
 
 <% end -%>
