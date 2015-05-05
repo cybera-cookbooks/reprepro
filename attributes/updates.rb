@@ -69,15 +69,3 @@ default['reprepro']['updates']['trusty-glusterfs'] = {
   'verifyrelease' => "774BAC4D",
   'keyserver' => "keyserver.ubuntu.com"
 }
-
-default['reprepro']['updates']['trusty-postgresql'] = {
-  'method' => "http://apt.postgresql.org/pub/repos/apt",
-  'suite' => "trusty-pgdg",
-  'components' => "main",
-  'architectures' => [ "amd64", "i386" ],
-  'verifyrelease' => "ACCC4CF8",
-  'filterlist' => {
-    'default_action' => "deinstall",
-    'name' => "trusty-postgresql"
-  }
-}
