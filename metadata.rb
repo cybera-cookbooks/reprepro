@@ -11,7 +11,6 @@ supports "ubuntu"
 supports "debian"
 
 depends "apache2"
-recommends "gpg"
-recommends "apt"
+depends "gpg"
 
 recipe "reprepro", "Installs and configures reprepro for an apt repository"
