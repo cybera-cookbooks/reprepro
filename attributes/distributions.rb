@@ -98,7 +98,7 @@ default['reprepro']['distributions']['trusty-testing'] = {
   'description' => "LMC testing packages for Ubuntu 14.04",
   'components' => [ "main", "restricted", "universe", "multiverse" ],
   'architectures' => [ "amd64", "i386" ],
-  'update' => [ "trusty", "precise-glusterfs" ]
+  'update' => [ "trusty", "trusty-glusterfs" ]
 }
 
 default['reprepro']['distributions']['trusty-testing-updates'] = {
