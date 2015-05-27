@@ -20,6 +20,7 @@
 
 node.set['apache']['listen_ports'] = node['apache']['listen_ports'] | Array(node['reprepro']['listen_port'])
 
+include_recipe "apt"
 include_recipe "apache2"
 
 %w{ apt-utils dpkg-dev reprepro debian-keyring devscripts dput }.each do |pkg|
