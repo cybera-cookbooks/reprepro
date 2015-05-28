@@ -1,11 +1,11 @@
 <% @distributions.each do |name, dist| -%>
-Origin: <%= node[:reprepro][:fqdn] %>
+Origin: <%= dist[:origin] %>
 Label: <%= dist[:label] %>
 Codename: <%= name %>
 Architectures: <%= dist[:architectures].join(" ") %>
 Components: <%= dist[:components].join(" ") %>
 Description: <%= dist[:description] %>
-SignWith: <%= node[:reprepro][:pgp_email] %>
+SignWith: <%= node[:reprepro][:pgp_key] %>
 <% if dist.has_key?(:pull) -%>
 Pull: <%= dist[:pull].join(" ") %>
 <% end -%>

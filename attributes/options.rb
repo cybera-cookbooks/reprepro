@@ -1,1 +1,1 @@
-default['reprepro']['options']['morguedir'] = "+c/morgue"
+default[:reprepro][:options][:morguedir] = "+c/morgue"

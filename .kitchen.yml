@@ -10,6 +10,8 @@ platforms:
 
 suites:
   - name: default
+    data_bags_path: "test/data_bags"
+    encrypted_data_bag_secret_key_path: "test/encrypted_data_bag_secret"
     run_list:
       - recipe[reprepro::default]
     attributes:

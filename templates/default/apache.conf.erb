@@ -1,6 +1,4 @@
-<VirtualHost *:<%= @params[:listen_port] %>>
-  ServerName <%= @params[:server_name] %>
-  ServerAlias <% @params[:server_aliases].each do |a| %><%= a %> <% end %>
+<VirtualHost *:80>
   DocumentRoot <%= @params[:docroot] %>
 
   <Directory <%= @params[:docroot] %>>
@@ -47,6 +45,6 @@
   </Directory>
 
   LogLevel warn
-  ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
-  CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
+  ErrorLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-error.log
+  CustomLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined
 </VirtualHost>
