@@ -138,5 +138,5 @@ default[:reprepro][:distributions]['trusty-testing-cybera'] = {
   :description => "LMC testing packages for Ubuntu 14.04",
   :components => [ "main" ],
   :architectures => [ "amd64", "i386" ],
-  :update => [ "trusty-postgresql" ]
+  :update => [ "trusty_postgresql" ]
 }

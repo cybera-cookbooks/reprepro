@@ -79,6 +79,6 @@ default['reprepro']['updates']['trusty-postgresql'] = {
   'keyurl' => "http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc",
   'filterlist' => {
     'default_action' => "deinstall",
-    'name' => "trusty-postgresql"
+    'name' => "trusty_postgresql"
   }
 }
