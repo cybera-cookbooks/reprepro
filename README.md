@@ -55,7 +55,7 @@ A list of distributions that will make up the repository. Below is an example th
     ],
     "pull": [
         "my-pull-rule"
-    ]
+    ],
     "update": [
         "my-update-rule"
     ]
@@ -87,7 +87,7 @@ Rules for updating distributions with packages from external repositories. This 
     "default_action": "install",
     "name": "my-filterlist"
   },
-  "verifyrelease": "437D05B5",                                                                                                      
+  "verifyrelease": "437D05B5",
   "keyserver": "keyserver.ubuntu.com"
 }
 ```
